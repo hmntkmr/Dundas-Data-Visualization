@@ -1,0 +1,2 @@
+# Dundas-Data-Visualization
+Application consists of writing a simple utility application written in HTML, CSS and JavaScript, is a standard test given to all technical applicants. How we judge this test is based on the job being applied for.   The results of this test will allow us to better understand your thought process when writing an application; Such as design, implementation, usability, as well as your attention to detail. 
