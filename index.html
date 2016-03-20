@@ -29,11 +29,18 @@ The results of this test will allow us to better understand your thought process
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
+
+
 
 
 </head>
 
-	<body class="container">
+	<body class="container-fluid">
 		
 		<div class="jumbotron">
 			
@@ -51,7 +58,7 @@ The results of this test will allow us to better understand your thought process
 	    					<input type="text" class="form-control" id="addValuePair" placeholder="Name/Value Pair">
 	  					</div>
 	  					
-	  					<button type="add" class="btn btn-primary btn-sm col-md-4 col-sm-4 col-xs-4 pull-right">Add</button>
+	  					<button type="add" class="btn btn-primary btn-sm col-md-4 col-sm-4 col-xs-4 pull-right" id="addValueButton">Add</button>
 
 					</form>
 
@@ -60,27 +67,29 @@ The results of this test will allow us to better understand your thought process
 				<div class="row">
 					
 					<div class="form-group col-md-8 col-sm-8 col-xs-8">
+
 						<label>Name/Value Pair List</label>
 						<textarea class="form-control" id="showValuePair" rows="20"></textarea>
+
 					</div>
 					
 					<div class="container form-group col-md-4 col-sm-4 col-xs-3">
 
 						<br><br><br>	
 						
-						<div class="row col-xs-offset-1"><button type="add" class="btn btn-info btn-sm col-md-12 col-sm-12 col-xs-12 center-block ">Sort By Name</button></div>
+						<div class="row col-xs-offset-1"><button type="add" class="btn btn-info btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="sortByNameButton">Sort By Name</button></div>
 						
 						<br><br><br>
 						
-						<div class="row col-xs-offset-1"><button type="add" class="btn btn-info btn-sm col-md-12 col-sm-12 col-xs-12 center-block">Sort By Value</button></div>
+						<div class="row col-xs-offset-1"><button type="add" class="btn btn-info btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="sortByValueButton">Sort By Value</button></div>
 						
 						<br><br><br>
 						
-						<div class="row col-xs-offset-1"><button type="add" class="btn btn-warning btn-sm col-md-12 col-sm-12 col-xs-12 center-block">Delete</button></div>
+						<div class="row col-xs-offset-1"><button type="add" class="btn btn-warning btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="deleteButton">Delete</button></div>
 						
 						<br><br><br>
 						
-						<div class="row col-xs-offset-1"><button type="add" class="btn btn-success btn-sm col-md-12 col-sm-12 col-xs-12 center-block">Show XML</button></div>
+						<div class="row col-xs-offset-1"><button type="add" class="btn btn-success btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="showXMLButton">Show XML</button></div>
 						
 						<br>
 					
@@ -92,6 +101,43 @@ The results of this test will allow us to better understand your thought process
 			</div>
 
 		</div>
+
+		<script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
+		<script type="text/javascript">
+
+
+		// adding variable names
+
+		var addValuePair = document.getElementById('addValuePair');
+
+		var addValueButton = document.getElementById('addValueButton');
+
+		var sortByNameButton = document.getElementById('sortByNameButton');
+
+		var sortByValueButton = document.getElementById('sortByValueButton');
+
+		var deleteButton = document.getElementById('deleteButton');
+
+		var showXMLButton = document.getElementById('showXMLButton');
+
+		var showValuePair = document.getElementById('showValuePair');
+
+		addValueButton.addEventListener("Click", addNamesValues, false);
+
+		function addNamesValues(){
+
+			addValuePair.value = addValuePair.value.trim();
+
+			if(addValuePair =! ""){
+
+				showValuePair.innerHTML = addValuePair;
+			}
+		}
+
+
+
+
+		</script>
 
 	</body>
 
