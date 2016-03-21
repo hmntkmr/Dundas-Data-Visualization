@@ -58,7 +58,7 @@ The results of this test will allow us to better understand your thought process
 	    					<input type="text" class="form-control" id="addValuePair" placeholder="Name/Value Pair">
 	  					</div>
 	  					
-	  					<button type="add" class="btn btn-primary btn-sm col-md-4 col-sm-4 col-xs-4 pull-right" id="addValueButton">Add</button>
+	  					<button onclick="addNamesValues()" type="add" class="btn btn-primary btn-sm col-md-4 col-sm-4 col-xs-4 pull-right" id="addValueButton">Add</button>
 
 					</form>
 
@@ -108,29 +108,35 @@ The results of this test will allow us to better understand your thought process
 
 		// adding variable names
 
-		var addValuePair = document.getElementById('addValuePair');
+		var valuePairAdd = document.getElementById('addValuePair');
 
-		var addValueButton = document.getElementById('addValueButton');
+		var valueButtonAdd = document.getElementById('addValueButton');
 
-		var sortByNameButton = document.getElementById('sortByNameButton');
+		var byNameSortButton = document.getElementById('sortByNameButton');
 
-		var sortByValueButton = document.getElementById('sortByValueButton');
+		var byValueSortButton = document.getElementById('sortByValueButton');
 
-		var deleteButton = document.getElementById('deleteButton');
+		var buttondelete = document.getElementById('deleteButton');
 
-		var showXMLButton = document.getElementById('showXMLButton');
+		var buttonShowXML = document.getElementById('showXMLButton');
 
-		var showValuePair = document.getElementById('showValuePair');
+		var showPairValue = document.getElementById('showValuePair');
 
-		addValueButton.addEventListener("Click", addNamesValues, false);
+		
 
 		function addNamesValues(){
 
-			addValuePair.value = addValuePair.value.trim();
+			valuePairAdd = valuePairAdd.value.toString();
 
-			if(addValuePair =! ""){
 
-				showValuePair.innerHTML = addValuePair;
+
+			// addValuePair.value = addValuePair.value.trim();
+
+			alert(valuePairAdd);
+
+			if(valuePairAdd != ""){
+
+				showPairValue.innerHTML= valuePairAdd;
 			}
 		}
 
