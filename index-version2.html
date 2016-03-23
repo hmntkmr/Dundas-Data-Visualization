@@ -25,9 +25,9 @@
     <br>
     <button type="button" onclick="sortByName()">Sort By Name</button>
     <br>
-    <button type="button" onclick="myFunction2()">Sort By Value</button><br>
-    <button type="button" onclick="myFunction2()">Delete</button><br>
-    <button type="button" onclick="myFunction2()">showXML</button><br>
+    <button type="button" onclick="sortByValue()">Sort By Value</button><br>
+    <button type="button" onclick="deleteOption()">Delete</button><br>
+    <button type="button" onclick="showXML()">Show XML</button><br>
     </form>
 
 
@@ -49,15 +49,27 @@
         
       function sortByName(){
 
-        var getlist = document.getElementById("mySelect");
-        var lengthOfOptions = getlist.options.length;
-        var nameValues = new Array();
-        for (var i = 0;  i <= lengthOfOptions; i++) { 
-          nameValues.push(getlist.options.item(i).text);
-        } 
+        var selectTag = document.getElementById("mySelect");
+        var lengthOfOptions = selectTag.options.length;
+        var names = new Array();
 
-        nameValues=nameValues.sort();
+
+        for (var i = 0;  i <= lengthOfOptions; i++) { 
+          
+          values = selectTag.options.item(i).text;
+          names.push(values);
+          alert(nameValues[i]);
+        }
+
+        nameValues.sort();
         
+
+        for (var i = 0;  i <= lengthOfOptions; i++){
+          alert(nameValues[i]); 
+
+        }
+
+
       }
 
       function sortByValue(){
@@ -65,6 +77,14 @@
         var getlist = document.getElementById("mySelect");
         var lengthOfOptions = getlist.options.length;
 
+
+
+      }
+
+      function deleteOption(){
+
+        var getlist = document.getElementById("mySelect");
+        getlist.remove(getlist.selectdIndex);
 
 
       }
