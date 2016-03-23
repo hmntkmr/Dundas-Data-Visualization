@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+
+    <!-- Naming the webpage for browzer and SEO -->
+    <title>Dundas Data Visualization : Standard Development Test</title>
+
+  </head>
+
+  <body>
+
+
+    <form>
+
+    <lable>Name/Value Pair</lable>  
+    <input type="text" id="addValuePair"  placeholder="Name/Value Pair">
+    <br>
+    <button type="button" onclick="addToList()">add</button>
+    <br>
+    <select id="mySelect"  width="50%" size="8">  
+    </select>
+    <br>
+    <button type="button" onclick="sortByName()">Sort By Name</button>
+    <br>
+    <button type="button" onclick="myFunction2()">Sort By Value</button><br>
+    <button type="button" onclick="myFunction2()">Delete</button><br>
+    <button type="button" onclick="myFunction2()">showXML</button><br>
+    </form>
+
+
+
+
+
+    <script>
+
+      function addToList() {
+
+        var valuePairAdd = document.getElementById('addValuePair');
+        valuePairAdd = valuePairAdd.value;
+        var x = document.getElementById("mySelect");
+        var option = document.createElement("option");
+        option.text = valuePairAdd;
+        x.add(option);
+
+      }
+        
+      function sortByName(){
+
+        var getlist = document.getElementById("mySelect");
+        var lengthOfOptions = getlist.options.length;
+        var nameValues = new Array();
+        for (var i = 0;  i <= lengthOfOptions; i++) { 
+          nameValues.push(getlist.options.item(i).text);
+        } 
+
+        nameValues=nameValues.sort();
+        
+      }
+
+      function sortByValue(){
+
+        var getlist = document.getElementById("mySelect");
+        var lengthOfOptions = getlist.options.length;
+
+
+
+      }
+
+
+    </script>
+
+</body>
+</html>

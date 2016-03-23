@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <!-- This web page consists of writing a simple utility application written in HTML, CSS and JavaScript, is a standard test given to all technical applicants. How we judge this test is based on the job being applied for. 
 
 The results of this test will allow us to better understand your thought process when writing an application; Such as design, implementation, usability, as well as your attention to detail. 
@@ -35,6 +37,18 @@ The results of this test will allow us to better understand your thought process
 
 <script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
 
+<style type="text/css">
+
+	.box-model{
+	width: auto;
+	height: 50%;
+    padding: 10%;
+    border: 1% solid gray;
+    margin: 0;
+	}
+
+</style>
+
 
 
 
@@ -52,13 +66,13 @@ The results of this test will allow us to better understand your thought process
 
 					<label>Name/Value Pair</label>
 					
-					<form class="row">
+					<form class="row addValue">
 	  					
 	  					<div class="form-group col-md-8 col-sm-8 col-xs-12">
-	    					<input type="text" class="form-control" id="addValuePair" placeholder="Name/Value Pair">
+	    					<input type="text" id="addValuePair"  class="col-md-8 col-sm-8 col-xs-12" name="validateForm" placeholder="Name/Value Pair">
 	  					</div>
 	  					
-	  					<button onclick="addNamesValues()" type="add" class="btn btn-primary btn-sm col-md-4 col-sm-4 col-xs-4 pull-right" id="addValueButton">Add</button>
+	  					<button onclick="myfunction()" type="add" class="btn btn-primary btn-sm col-md-4 col-sm-4 col-xs-4 pull-right" id="addValueButton" >Add</button>
 
 					</form>
 
@@ -66,10 +80,17 @@ The results of this test will allow us to better understand your thought process
 
 				<div class="row">
 					
-					<div class="form-group col-md-8 col-sm-8 col-xs-8">
+					<div class="form-group ">
 
-						<label>Name/Value Pair List</label>
-						<textarea class="form-control" id="showValuePair" rows="20"></textarea>
+						<form class="col-md-8 col-sm-8 col-xs-8">
+							
+							<label>Name/Value Pair List</label>
+
+							<select class="form-control " id="showValuePair" name="datalist" size="20" multiple="multiple">
+  							
+							</select>
+
+						</form>	
 
 					</div>
 					
@@ -77,19 +98,19 @@ The results of this test will allow us to better understand your thought process
 
 						<br><br><br>	
 						
-						<div class="row col-xs-offset-1"><button type="add" class="btn btn-info btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="sortByNameButton">Sort By Name</button></div>
+						<div class="row col-xs-offset-1"><button  onclick="sortByNames()" type="add" class="btn btn-info btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="sortByNameButton">Sort By Name</button></div>
 						
 						<br><br><br>
 						
-						<div class="row col-xs-offset-1"><button type="add" class="btn btn-info btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="sortByValueButton">Sort By Value</button></div>
+						<div class="row col-xs-offset-1"><button onclick="sortByValue" type="add" class="btn btn-info btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="sortByValueButton">Sort By Value</button></div>
 						
 						<br><br><br>
 						
-						<div class="row col-xs-offset-1"><button type="add" class="btn btn-warning btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="deleteButton">Delete</button></div>
+						<div class="row col-xs-offset-1"><button onclick="deleteData()" type="add" class="btn btn-warning btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="deleteButton">Delete</button></div>
 						
 						<br><br><br>
 						
-						<div class="row col-xs-offset-1"><button type="add" class="btn btn-success btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="showXMLButton">Show XML</button></div>
+						<div class="row col-xs-offset-1"><button onclick="showXML()" type="add" class="btn btn-success btn-sm col-md-12 col-sm-12 col-xs-12 center-block" id="showXMLButton">Show XML</button></div>
 						
 						<br>
 					
@@ -103,42 +124,66 @@ The results of this test will allow us to better understand your thought process
 		</div>
 
 		<script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
+		
 		<script type="text/javascript">
 
 
 		// adding variable names
 
-		var valuePairAdd = document.getElementById('addValuePair');
+		
 
-		var valueButtonAdd = document.getElementById('addValueButton');
+		// var namePairValues = [];
 
-		var byNameSortButton = document.getElementById('sortByNameButton');
+		// var valueButtonAdd = document.getElementById('addValueButton');
 
-		var byValueSortButton = document.getElementById('sortByValueButton');
+		// var byNameSortButton = document.getElementById('sortByNameButton');
 
-		var buttondelete = document.getElementById('deleteButton');
+		// var byValueSortButton = document.getElementById('sortByValueButton');
 
-		var buttonShowXML = document.getElementById('showXMLButton');
+		// var buttondelete = document.getElementById('deleteButton');
 
-		var showPairValue = document.getElementById('showValuePair');
+		// var buttonShowXML = document.getElementById('showXMLButton');
+
+		// var showPairValue = document.getElementById('showValuePair');
+
 
 		
 
-		function addNamesValues(){
+		function myFunction() {
 
-			valuePairAdd = valuePairAdd.value.toString();
-
-
-
-			// addValuePair.value = addValuePair.value.trim();
-
-			alert(valuePairAdd);
-
-			if(valuePairAdd != ""){
-
-				showPairValue.innerHTML= valuePairAdd;
-			}
+		    var valuePairAdd = document.getElementById('addValuePair');
+		    valuePairAdd = valuePairAdd.value;
+		    var x = document.getElementById("showValuePair");
+		    var option = document.createElement("option");
+		    option.text = valuePairAdd;
+		    x.add(option);
 		}
+			
+			// $document.ready(function(){
+			// 	var arr = jQuery.makeArray( valuePairAdd.value );
+			// 	// Use an Array method on list of dom elements
+			// 	arr.reverse();
+			// 	$( arr ).appendTo( document.body );
+			// });
+
+			// if((valuePairAdd != "" || valuePairAdd != null) && (valuePairAdd = "/"){
+
+			// 	valuePairAdd=valuePairAdd.split("/");
+			// 	alert(valuePairAdd);
+			// 	 showPairValue.innerHTML = valuePairAdd;
+			// }
+
+			// if(valuePairAdd != ""){
+
+			// 	nameValues.push(valuePairAdd);
+		
+			// 	for (var i = nameValues.length - 1; i >= 0; i--) {
+			
+			// 	alert(nameValues[0]);
+
+			// 	};
+			// }
+			
 
 
 
