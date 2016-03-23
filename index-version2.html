@@ -16,18 +16,32 @@
     <form>
 
     <lable>Name/Value Pair</lable>  
+    
     <input type="text" id="addValuePair"  placeholder="Name/Value Pair">
+    
     <br>
+    
     <button type="button" onclick="addToList()">add</button>
+    
     <br>
-    <select id="mySelect"  width="50%" size="8">  
-    </select>
+    
+    <select id="mySelect"  width="50%" size="8"></select>
+    
     <br>
+
     <button type="button" onclick="sortByName()">Sort By Name</button>
+    
     <br>
-    <button type="button" onclick="sortByValue()">Sort By Value</button><br>
-    <button type="button" onclick="deleteOption()">Delete</button><br>
-    <button type="button" onclick="showXML()">Show XML</button><br>
+    <button type="button" onclick="sortByValue()">Sort By Value</button>
+    
+    <br>
+
+    <button type="button" onclick="deleteOption()">Delete</button>
+    <br>
+    
+    <button type="button" onclick="showXML()">Show XML</button>
+    <br>
+
     </form>
 
 
@@ -39,11 +53,14 @@
       function addToList() {
 
         var valuePairAdd = document.getElementById('addValuePair');
-        valuePairAdd = valuePairAdd.value;
-        var x = document.getElementById("mySelect");
+        valuePairAdd = valuePairAdd.value.trim();
+        value = valuePairAdd.split("=");
+        var selectTag = document.getElementById("mySelect");
         var option = document.createElement("option");
-        option.text = valuePairAdd;
-        x.add(option);
+        option.setAttribute("value" , value[1]);
+        var text = document.createTextNode(valuePairAdd);
+        option.appendChild(text);
+        selectTag.appendChild(option);
 
       }
         
@@ -51,23 +68,37 @@
 
         var selectTag = document.getElementById("mySelect");
         var lengthOfOptions = selectTag.options.length;
-        var names = new Array();
-
+        var option = document.createElement("option");
+        var namestemp = new Array();
+        var names;
 
         for (var i = 0;  i <= lengthOfOptions; i++) { 
           
-          values = selectTag.options.item(i).text;
-          names.push(values);
-          alert(nameValues[i]);
+          namestemp.push(selectTag.options.item(i).text);
+
         }
 
-        nameValues.sort();
+        namestemp.sort();
+
+        for (var i = 0; i <= lengthOfOptions; i++){
+
+          alert(namestemp[i]);
+
+        }
+
+        for (var i = 0; i <= lengthOfOptions; i++){
+          
+          selectTag.remove(i);
+
+        }
         
-
         for (var i = 0;  i <= lengthOfOptions; i++){
-          alert(nameValues[i]); 
+          
+          option.text = namestemp[i]
+          selectTag.add(option);
 
         }
+
 
 
       }
@@ -78,14 +109,12 @@
         var lengthOfOptions = getlist.options.length;
 
 
-
       }
 
       function deleteOption(){
 
         var getlist = document.getElementById("mySelect");
         getlist.remove(getlist.selectdIndex);
-
 
       }
 
