@@ -25,7 +25,7 @@
     
     <br>
     
-    <select id="mySelect"  width="50%" size="8"></select>
+    <select id="mySelect"  width="50%" size="8" multiple ></select>
     
     <br>
 
@@ -50,71 +50,115 @@
 
     <script>
 
+      var selectTag = document.getElementById("mySelect");
+
+      selectTag.multiple = true;
+
       function addToList() {
 
         var valuePairAdd = document.getElementById('addValuePair');
+        
+        var regularExpAlpha =  /^[a-z0-9]+$/i;
+        
         valuePairAdd = valuePairAdd.value.trim();
-        value = valuePairAdd.split("=");
-        var selectTag = document.getElementById("mySelect");
-        var option = document.createElement("option");
-        option.setAttribute("value" , value[1]);
-        var text = document.createTextNode(valuePairAdd);
-        option.appendChild(text);
-        selectTag.appendChild(option);
+        nameValue = valuePairAdd.split("=");
+        
+        var name = nameValue[0];
+        var value = nameValue[1];
+
+        
+
+        name  = name.slice(1,name.length - 1 );
+        value =  value.slice( 1,value.length - 1 );
+
+        if( name.match(regularExpAlpha) == true || value.match(regularExpAlpha)){
+
+          var option = document.createElement("option");
+          option.setAttribute("value", value);
+          var text = document.createTextNode(name + "=" + value);
+          option.appendChild(text);
+          selectTag.appendChild(option);
+
+        }
+
+        else{
+
+          alert(" Sorry! Only Alphanumeric");
+
+        }
 
       }
+
+
         
       function sortByName(){
 
         var selectTag = document.getElementById("mySelect");
-        var lengthOfOptions = selectTag.options.length;
-        var option = document.createElement("option");
-        var namestemp = new Array();
-        var names;
-
-        for (var i = 0;  i <= lengthOfOptions; i++) { 
-          
-          namestemp.push(selectTag.options.item(i).text);
-
-        }
-
-        namestemp.sort();
-
-        for (var i = 0; i <= lengthOfOptions; i++){
-
-          alert(namestemp[i]);
-
-        }
-
-        for (var i = 0; i <= lengthOfOptions; i++){
-          
-          selectTag.remove(i);
-
-        }
         
-        for (var i = 0;  i <= lengthOfOptions; i++){
-          
-          option.text = namestemp[i]
-          selectTag.add(option);
+        tmpAryName = new Array();
+        
+        for(i = 0; i< selectTag.length; i++){
 
+          
+          tmpAryName[i] = selectTag.options[i].text;
+        
         }
 
+        tmpAryName.sort();
 
+        for(i = 0; i < selectTag.length; i++){
+
+         selectTag.options[i].text = tmpAryName[i];
+
+        }
 
       }
+
 
       function sortByValue(){
 
-        var getlist = document.getElementById("mySelect");
-        var lengthOfOptions = getlist.options.length;
 
+        var selectTag = document.getElementById("mySelect");
+
+        tmpAryValue = new Array();
+
+        for( i = 0; i < selectTag.length; i++ ){
+
+          nameValue = selectTag.options[i].text.split("=");
+          var name = nameValue[0];
+          var value = nameValue[1];
+
+          tmpAryValue[i] = new Array(2);
+
+          for(j = 0; j < selectTag.length; i++){
+
+          tmpAryValue[i][j] = name.toString();
+          }
+
+        }
+
+        tmpAryValue.sort(sortFunction);
+
+        function sortFunction(a, b) {
+          
+          if (a[1] === b[1]) {
+            return 0;
+          }
+          
+          else {
+            return (a[1] < b[1]) ? -1 : 1;
+          }
+        
+        }
 
       }
 
+
+      
+
       function deleteOption(){
 
-        var getlist = document.getElementById("mySelect");
-        getlist.remove(getlist.selectdIndex);
+        selectTag.remove(selectTag.selectedIndex);
 
       }
 
