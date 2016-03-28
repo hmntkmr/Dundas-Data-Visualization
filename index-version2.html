@@ -50,18 +50,20 @@
 
     <script>
 
-      var selectTag = document.getElementById("mySelect");
+        var selectTag = document.getElementById("mySelect");
 
-      selectTag.multiple = true;
+        selectTag.multiple = true;
 
-      function addToList() {
+        function addToList() {
 
         var valuePairAdd = document.getElementById('addValuePair');
         var regularExpAlpha =  /^[a-z0-9]+$/i;
-        
+
+
         valuePairAdd = valuePairAdd.value.trim();
         nameValue = valuePairAdd.split("=");
-        
+
+
         var name = nameValue[0];
         var value = nameValue[1];
 
@@ -92,20 +94,25 @@
 
         var selectTag = document.getElementById("mySelect");
         
-        tmpAryName = new Array();
+        var tmpAryName = new Array();
         
         for(i = 0; i< selectTag.length; i++){
 
           
-          tmpAryName[i] = selectTag.options[i].text;
+          nameValue = selectTag.options[i].text.split("=");
+          var name = nameValue[0];
+          var value = nameValue[1];
         
+          tmpAryName.push([name, value]);
         }
 
-        tmpAryName.sort();
+        tmpAryName.sort(sortNames);
 
         for(i = 0; i < selectTag.length; i++){
 
-         selectTag.options[i].text = tmpAryName[i];
+         selectTag.options[i].text = tmpAryName[i][0] + "=" +tmpAryName[i][1];
+
+         selectTag.options[i].setAttribute("value",tmpAryName[i][1]);
 
         }
 
@@ -117,9 +124,7 @@
 
         var selectTag = document.getElementById("mySelect");
 
-        tmpAryValue = {};
-
-        namesValues = [];
+        var status = new Array();
 
         for( i = 0; i < selectTag.length; i++ ){
 
@@ -127,35 +132,19 @@
           var name = nameValue[0];
           var value = nameValue[1];
 
-          tmpAryValue.name = name;
-          tmpAryValue.value = value;
+          status.push([name , value]);
 
         }
 
-        namesValues.push({tmpAryValue: tmpAryValue});
+        status.sort(sortValues);
 
-         for( i = 0; i < selectTag.length; i++ ){
+        for( i = 0; i < selectTag.length; i++ ){
 
-          alert(namesValues[i]);
-
-         } 
+          selectTag.options[i].text = status[i][0] +"="+ status[i][1];
+          selectTag.options[i].setAttribute("value", status[i][1])        
+        }
         
-        // tmpAryValue.sort(sortFunction);
-
-        // function sortFunction(a, b) {
-          
-        //   if (a[1] === b[1]) {
-        //     return 0;
-        //   }
-          
-        //   else {
-        //     return (a[1] < b[1]) ? -1 : 1;
-        //   }
-        
-        // }
-
       }
-
 
       
 
@@ -163,6 +152,31 @@
 
         selectTag.remove(selectTag.selectedIndex);
 
+      }
+
+
+      function sortValues(a, b) {
+              
+          if (a[1] === b[1]) {
+          return 0;
+          }
+        
+        else {
+          return (a[1] < b[1]) ? -1 : 1;
+        }
+      
+      }
+
+      function sortNames(a, b) {
+              
+          if (a[0] === b[0]) {
+          return 0;
+          }
+        
+        else {
+          return (a[0] < b[0]) ? -1 : 1;
+        }
+      
       }
 
 
