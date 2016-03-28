@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<script type="text/javascript">
+ 
+/**********************************************
+Prototype to sort an associative array
+***********************************************/
+ 
+Array.prototype.sortAssoc = function() {
+ 
+//separate the keys into an array
+var keys = new Array();
+for(var i in this) {
+       keys.push(i);
+}
+ 
+//now sort the keys
+keys.sort();
+ 
+//build the sorted array
+var sortedArray = new Array();
+for(var i=0; i < keys.length-1; i++) {
+          sortedArray[keys[i]] = this[keys[i]];
+}
+ 
+return sortedArray;
+ 
+}
+ 
+//***** testing code **************
+var myArray = [];
+myArray['bbb'] = 'b_red';
+myArray['aaa'] = 'a_green';
+myArray['ccc'] = 'c_blue';
+ 
+//sort the above array
+var arraySorted = [];
+arraySorted = myArray.sortAssoc();
+ 
+//display the results
+for(var i in arraySorted) {
+         document.write(i+" = "+arraySorted[i]+'<br /><br />');
+}
+ 
+</script>
+</head>
+<body>
+</body>
+</html>
