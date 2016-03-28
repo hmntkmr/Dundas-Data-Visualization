@@ -68,7 +68,7 @@
         name  = name.slice(1,name.length - 1 );
         value =  value.slice( 1,value.length - 1 );
 
-        if( name.match(regularExpAlpha) == true || value.match(regularExpAlpha)){
+        if( name.match(regularExpAlpha)  && value.match(regularExpAlpha)  ){
 
           var option = document.createElement("option");
           option.setAttribute("value", value);
