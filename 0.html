@@ -1,0 +1,399 @@
+  <html>
+    <head>
+
+        <title>Display Emp Details</title>
+
+        <script type="text/javascript" language="javascript">
+
+    	var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+        	var fso = new ActiveXObject("Scripting.FileSystemObject");	
+        	var FILENAME='D:\\example.xml';
+
+
+
+    function SaveXMLData()
+    {
+     	validations();
+    }
+
+
+    function createfile()
+    {
+
+    	var file;
+
+        	var e1=document.getElementById('empName').value;
+        	var p1=document.getElementById('empNumber').value;
+        	var em1=document.getElementById('empEmail').value;
+        	var d1=document.getElementById('empDate').value;
+
+        	var tablemain = document.getElementById('tblmain');
+
+    	if(fso.fileExists(FILENAME))
+        	{
+    		xmlDoc.load(FILENAME);
+        		var lng;
+        		lng=xmlDoc.getElementsByTagName("Details");
+
+        		var xmlread= fso.OpenTextFile(FILENAME,1,true,0);
+
+        		var x=xmlread.readAll();
+        		var replace=x.replace('</Emp>','');
+        		var sno=lng.length + 1;
+        		file=fso.OpenTextFile(FILENAME,2,true);
+
+        		file.writeLine(replace);
+
+        		file.WriteLine('<Details category="'+sno+'">');
+        		file.WriteLine('<SNo>'+sno+'</SNo>');
+        		file.WriteLine('<Name>'+e1+'</Name>');
+        		file.WriteLine('<PhoneNumber>'+p1+'</PhoneNumber>');
+        		file.WriteLine('<Emailid>'+em1+'</Emailid>');
+        		file.WriteLine('<Date>'+d1+'</Date>');
+
+        		file.WriteLine('</Details>');
+        		file.WriteLine('</Emp>');
+        		
+    		alert('another file updated');
+        	}
+        	else
+        	{
+
+        		file= fso.CreateTextFile(FILENAME, true);
+        		file.WriteLine('<?xml version="1.0" encoding="utf-8" ?>');
+    		file.WriteLine('<?xml-stylesheet type="text/xsl" href="cdcatalog.xsl"?>');
+        		file.WriteLine('<Emp>');
+        		file.WriteLine('<Details category="1">');
+        		file.WriteLine('<SNo>'+1+'</SNo>');
+        		file.WriteLine('<Name>'+e1+'</Name>');
+        		file.WriteLine('<PhoneNumber>'+p1+'</PhoneNumber>');
+        		file.WriteLine('<Emailid>'+em1+'</Emailid>');
+        		file.WriteLine('<Date>'+d1+'</Date>');
+
+        		file.WriteLine('</Details>');
+        		file.WriteLine('</Emp>');     
+
+    		alert('file updated');
+        	}
+
+    	<!-- displayData();-->
+
+    	document.getElementById('empName').value='';
+    	document.getElementById('empNumber').value='';
+    	document.getElementById('empEmail').value='';
+    	document.getElementById('empDate').value='';
+
+    addRow('tablemain');
+    	file.close();
+    }
+
+         
+    function validations() 
+    {
+    	var emp1=document.getElementById('empName').value; 
+            var letters = /^[\s A-Za-z]+$/; 
+            if(emp1!="")
+            {
+            	if(emp1.match(letters)) 
+              	{
+    	    		allnumeric();
+              	}
+              	else 
+    	        {
+              		alert('Please input alphabet characters only'); 
+              		return false; 
+              	}
+            }
+    	else
+    	{
+    	  	alert('Please Enter Name.');
+     	}
+    }
+
+            
+    <!--For checking Email-->
+
+    function checkemail()
+    {
+    	var email = document.getElementById('empEmail');
+            var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    	if(email.value!="")
+    	{
+            	if (!filter.test(email.value)) 
+    		{
+            		alert('Please provide a valid email address');
+            		return false;
+            	}
+                    else
+                    {
+                    	DateValidation();
+                    }
+           	}     
+    	else
+    	{
+    		alert('Please Enter Email.');
+    	}
+    }
+
+
+    <!--For checking Date Format-->
+
+    function DateValidation()
+    {
+        	var date=/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{2,4}$/;
+        	var empDate=document.getElementById("empDate");
+
+    	if(empDate.value!="")
+          	{
+    	    	if(empDate.value.match(date))
+    	    	{
+    	    		createfile();
+    	    	}
+    	    	else
+    		{
+        	     		alert("Please provide valid date : DD-MM-YY(YYYY)");
+    			return(false);
+    	    	}
+          	}
+    	else
+    	{
+    		alert('Please Enter Date.');
+    	}
+    }
+
+
+    <!--For checking phone number-->
+
+    function allnumeric() 
+    {
+    	var numbers=/^\d{10}$/;
+        	var empNumber=document.getElementById("empNumber");
+    	if(empNumber.value!="")
+    	{
+    		if(empNumber.value.length=="10")
+    		{
+        			if(empNumber.value.match(numbers))
+        			{
+           				checkemail();
+        			}
+        			else
+    			{
+    	    			alert("Phone number should be numeric");
+        				return(false);
+    			}
+    		}
+    		else
+    		{
+    			alert('Phone Number should be like: 9876543210');
+    		}
+    	}
+    	else
+    	{
+    		alert('Please Enter Phone Number.');
+    	}
+    }
+
+
+
+    function addRow(id) 
+    {
+
+        if(fso.fileExists(FILENAME))
+        {
+
+    	xmlDoc.load(FILENAME);
+        	var x;
+        	x=xmlDoc.getElementsByTagName("Details");
+
+            var table = document.getElementById('tbl');        
+
+
+
+    	var nxtbtn= document.getElementById("btnnext");
+    	var prvbtn=document.getElementById("btnprev");
+    	nxtbtn.disabled=true;
+    	prvbtn.disabled=true;
+    	if(x.length >5)
+    	{
+    		nxtbtn.disabled=false;
+    	}
+    	var j=0;k=5;
+    	if(k>x.length)
+    	{k=x.length;}
+
+    	var store=document.getElementById("txtstore");
+    	var maxval=document.getElementById("txtmax");
+
+    	if(id=="btnprev")
+    	{        
+    		if((store.value % k)==0)
+    		{
+    			store.value = store.value - k ;
+    			if(store.value>0)
+    			{
+    				j = parseInt(store.value);
+    				k += parseInt(store.value);
+    			}
+    		}
+    		else
+    		{
+    			store.value =store.value - (store.value % k) ;
+
+    			if(store.value >0)
+    			{
+    				j = store.value - k;
+    				k = store.value;
+    			}
+    	
+    		}
+    	
+    		if(j > 0)
+    		{
+    			prvbtn.disabled=false;
+    		}
+
+    	}
+    	if(id=="btnnext")
+    	{
+    		if(store.value==0)
+    		{
+    			store.value=table.rows.length;
+    		}
+    		else if(store.value <0)
+    		{
+    			store.value=maxval.value;
+    		}
+    		prvbtn.disabled=false;
+    	    	if(store.value >=k)
+    		{
+    			j +=parseInt(store.value);
+    			k +=parseInt(store.value);
+    			if(k >= x.length)
+    			{
+    				k=x.length;
+    				nxtbtn.disabled = true;
+    				prvbtn.disabled = false;
+    			}
+    		}
+    	}
+
+    	table.innerHTML = "";
+    	var rowCount = 0;
+
+         	for (i=j;i<k;i++)
+    	{
+         
+            	var row = table.insertRow(rowCount);
+
+    	        var cell1 = row.insertCell(0);
+            	var element1 = document.createElement("input");
+    	        element1.type = "checkbox";
+    	        element1.id =  "id2" ;
+            	cell1.appendChild(element1);
+
+    	        // Create label
+            	var label = document.createElement("label");
+    	        label.htmlFor =  "id2" ;
+            	cell1.appendChild(label);
+
+    	        var cell2 = row.insertCell(1);
+            	cell2.innerHTML = x[i].getElementsByTagName("SNo")[0].childNodes[0].nodeValue;
+
+    	        var name = row.insertCell(2);
+            	var elname =document.createElement("input");
+    	        elname.type = "text";
+    		elname.readOnly=true;
+    		elname.value=x[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+    	        name.appendChild(elname);
+
+    	        var phnno = row.insertCell(3);
+            	var elphn =document.createElement("input");
+    	        elphn.type = "text";
+    		elphn.readOnly=true;
+    		elphn.value=x[i].getElementsByTagName("PhoneNumber")[0].childNodes[0].nodeValue;
+            	phnno.appendChild(elphn);
+
+    	        var email = row.insertCell(4);
+            	var elemail =document.createElement("input");
+    	        elemail.type = "text";
+    		elemail.readOnly=true;
+    		elemail.value=x[i].getElementsByTagName("Emailid")[0].childNodes[0].nodeValue;
+            	email.appendChild(elemail);
+
+    	        var date = row.insertCell(5);
+            	var eldate =document.createElement("input");
+    	        eldate.type = "text";
+    		eldate.readOnly=true;
+    		eldate.value=x[i].getElementsByTagName("Date")[0].childNodes[0].nodeValue;
+            	date.appendChild(eldate);
+    	
+    		rowCount +=1;
+         	}
+    	maxval.value=x[table.rows.length - 1].getElementsByTagName("SNo")[0].childNodes[0].nodeValue;
+
+    	if(id=="btnprev")
+    	{
+    	 store.value =store.value - 5;
+    	}
+    	 else
+    	{
+        	 store.value =parseInt(k);
+    	}
+       }
+    }
+
+        </script>
+    </head>
+
+    <body onload="addRow('tbl')">
+
+    	<form id="empForm" action="" method="get">
+
+        	<p><b>Emp Registration:</b></p>
+
+        	<table>
+        		<tr>
+        			<td>Name:</td>
+        			<td><input type="text" id="empName" maxlength="25"/></td>
+        		</tr>
+        		<tr>
+        			<td>Phone Number:</td>
+        			<td><input type="text" id="empNumber" maxlength="10"/></td>
+        		</tr>
+    	    	<tr>
+        			<td>EmailId:</td>
+        			<td><input type="text" id="empEmail"/></td>
+        		</tr>
+        		<tr>
+        			<td>Date:</td>
+        			<td><input type="text" id="empDate" maxlength="10"/></td>
+        		</tr>
+        		<tr>
+        			<td align="center">
+    			<input type="button" value="Submit" onclick="SaveXMLData()"/></td>
+        			<td>
+    			<input type="button" value="Show Data" id="show" onclick="displayData(this.id)" style="display:none;"/></td>
+        		</tr>
+        	</table>
+    	<!-- <table><tr><td><input type="button" onclick="displayData(this.id)" value="Prev" id="prev" disabled="disabled"></td>
+    	   <td><input type="button" onclick="displayData(this.id)" value="Next" id="next" disabled="disabled"></td></tr></table> -->
+
+     	<div id='displaydatadiv'>	
+        	</div>
+    	<!-- <INPUT type="button" value="Add Row" onclick="addRow('tbl')" /> -->
+    	
+    	<div style="height: 135px; width:650px; background-color: Lavender;" >
+    		<TABLE id="tbl" width="350px">    
+      		</TABLE>
+    	</div>
+    	<table id="tblmain" border="1" style="display:true" ></table>
+    		<input type="button" id="btnprev" value="Prev" onclick="addRow(this.id)" disabled="disabled">
+    		<input type="button" id="btnnext" value="Next" onclick="addRow(this.id)" disabled="disabled">
+
+    		<input type="hidden" id="txtstore" style="display:none;">
+    		<input type="hidden" id="txtmax" style="display:none;">
+
+    </body>
+    </html>
+        

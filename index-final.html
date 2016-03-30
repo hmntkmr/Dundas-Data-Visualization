@@ -197,6 +197,20 @@
 
       }
 
+      function showXML(){
+
+        var xml = "";
+
+        for(i = 0; i < selectTag.length; i++){
+
+        var nom = selectTag.options[i].text.split("=")[0];
+        var val = selectTag.options[i].value;
+        xml += '\t<name>'+nom+'</name>\n\t<value>'+val+'</value>\n';
+        }
+
+        alert("<?xml version=1.0 encoding=ISO-8859-1?>\n" + "<namePair>\n" + xml + "</namePair>");
+        
+      }
 
       function sortValues(a, b) {
               
